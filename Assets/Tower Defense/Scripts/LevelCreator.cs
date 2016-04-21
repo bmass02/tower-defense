@@ -5,29 +5,12 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour {
     public GameObject elite;
     public GameObject normal;
+    public GameObject pathParent;
     private int level = 0;
     private int baseEnemyCount = 10;
-
-    private class Stage
-    {
-        private int stage;
-        private int max = 5;
-        public Stage()
-        {
-            stage = 0;
-        }
-
-        public void next()
-        {
-            stage = (stage + 1) % max;
-        }
-
-        public int current()
-        {
-            return stage+1;
-        }
-    }
-    private Stage stageManager = new Stage();
+    private int stage = 0;
+    private int maxStages = 5;
+    
 	// Use this for initialization
 	void Start () {
 	}
@@ -48,16 +31,30 @@ public class LevelCreator : MonoBehaviour {
         int levelEnemies = baseEnemyCount + level;
         WaveComponent normals = new WaveComponent();
         normals.enemyPrefab = normal;
-        normals.num = levelEnemies - stageManager.current();
+        normals.num = levelEnemies - stage;
         wave.Add(normals);
 
         WaveComponent elites = new WaveComponent();
         elites.enemyPrefab = elite;
-        elites.num = stageManager.current();
+        elites.num = stage;
         wave.Add(elites);
 
-        stageManager.next();
+        nextStage();
 
         return wave;
+    }
+
+    private void nextStage()
+    {
+        stage++;
+        if(stage == maxStages)
+        {
+            stage = 0;
+            nextLevel();
+        }
+    }
+    private void nextLevel()
+    {
+        level++;
     }
 }
