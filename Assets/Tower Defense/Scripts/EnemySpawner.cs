@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour {
@@ -8,20 +9,16 @@ public class EnemySpawner : MonoBehaviour {
 	float spawnCDremaining = 5; // time between each wave
 	public int waveCountdown;
 
-	[System.Serializable]
-	public class WaveComponent {
-		public GameObject enemyPrefab;
-		public int num;
-		[System.NonSerialized]
-		public int spawned = 0;
-	}
-
-	public WaveComponent[] waveComps;
+	private List<WaveComponent> waveComps;
+    public GameObject levelCreatorObj;
+    private LevelCreator levelCreator; 
 
 	// Use this for initialization
 	void Start () {
 		spawnCDremaining = 5;
 		waveCountdown = (int)spawnCDremaining;
+        levelCreator = levelCreatorObj.GetComponent<LevelCreator>();
+        waveComps = levelCreator.createSpawnSeq();
 	}
 		
 	// Update is called once per frame

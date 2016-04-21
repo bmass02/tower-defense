@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -73,11 +67,13 @@
     <Compile Include="Assets\Tower Defense\Scripts\Bullet.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\Enemy.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Tower Defense\Scripts\LevelCreator.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\PathNode.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\RemoveDeadEnemy.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\Tower.cs" />
     <Compile Include="Assets\Tower Defense\Scripts\TowerSpot.cs" />
+    <Compile Include="Assets\Tower Defense\Scripts\WaveComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
