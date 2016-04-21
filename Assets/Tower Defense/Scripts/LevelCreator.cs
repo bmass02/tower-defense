@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour {
     public GameObject elite;
     public GameObject normal;
-    private int level;
-    private int baseEnemyCount;
+    private int level = 0;
+    private int baseEnemyCount = 10;
 
     private class Stage
     {
@@ -27,11 +27,9 @@ public class LevelCreator : MonoBehaviour {
             return stage+1;
         }
     }
-    private Stage stageManager;
+    private Stage stageManager = new Stage();
 	// Use this for initialization
 	void Start () {
-        stageManager = new Stage();
-        baseEnemyCount = 10;
 	}
 	
 	// Update is called once per frame
