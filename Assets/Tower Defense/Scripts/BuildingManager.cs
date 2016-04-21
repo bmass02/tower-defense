@@ -47,6 +47,7 @@ public class BuildingManager : MonoBehaviour {
 	//when upgrade button is selected
 	public void UpgradeSelectedTowerType(GameObject prefab)
 	{
+		prefab = selectedTower;
 		if (prefab != null) {
 			ScoreManager sm = GameObject.FindObjectOfType<ScoreManager> ();
 			if (sm.money < selectedTower.GetComponent<Tower> ().upgradeCost) {
@@ -60,30 +61,33 @@ public class BuildingManager : MonoBehaviour {
 			sm.money -= prefab.GetComponent<Tower> ().upgradeCost;
 			sm.StartCoroutine(sm.ShowMessage(sm.moneyUpdateText, "- $" + selectedTower.GetComponent<Tower>().upgradeCost, 2f));
 
-			//Upgrade existing towers
-			existingBasicTowers = GameObject.FindGameObjectsWithTag("Basic Tower");
-			foreach (GameObject t in existingBasicTowers) {
-				t.GetComponent<Tower> ().damage = t.GetComponent<Tower> ().damage + 1;
-				t.GetComponent<Tower> ().range = t.GetComponent<Tower> ().range + 3f;
-				t.GetComponent<Tower> ().fireCooldown = t.GetComponent<Tower> ().fireCooldown - .1f;
-			}
 
-			existingRocketTowers = GameObject.FindGameObjectsWithTag("Rocket Tower");
-			foreach (GameObject t in existingRocketTowers) {
-				t.GetComponent<Tower> ().damage = t.GetComponent<Tower> ().damage + 2f;
-				t.GetComponent<Tower> ().range = t.GetComponent<Tower> ().range + 2f;
-				t.GetComponent<Tower> ().fireCooldown = t.GetComponent<Tower> ().fireCooldown - .1f;
-				t.GetComponent<Tower> ().radius = t.GetComponent<Tower> ().radius + 4f;
-			}
-				
+			if (selectedTower.gameObject.name == "Basic Tower") {
+				//Upgrade existing towers
+				existingBasicTowers = GameObject.FindGameObjectsWithTag ("Basic Tower");
+				foreach (GameObject t in existingBasicTowers) {
+					t.GetComponent<Tower> ().damage = t.GetComponent<Tower> ().damage + 20f;
+					t.GetComponent<Tower> ().range = t.GetComponent<Tower> ().range + 3f;
+					//t.GetComponent<Tower> ().fireCooldown = t.GetComponent<Tower> ().fireCooldown - .1f;
+				}
+			} else if (selectedTower.gameObject.name == "Rocket Tower") {
+				existingRocketTowers = GameObject.FindGameObjectsWithTag ("Rocket Tower");
+				foreach (GameObject t in existingRocketTowers) {
+					t.GetComponent<Tower> ().damage = t.GetComponent<Tower> ().damage + 20f;
+					t.GetComponent<Tower> ().range = t.GetComponent<Tower> ().range + 2f;
+					//t.GetComponent<Tower> ().fireCooldown = t.GetComponent<Tower> ().fireCooldown - .1f;
+					t.GetComponent<Tower> ().radius = t.GetComponent<Tower> ().radius + 1f;
+				}
+			}	
+
 			//Upgrade Prefabs
-			selectedTower.GetComponent<Tower> ().damage = selectedTower.GetComponent<Tower> ().damage + 2f;
+			selectedTower.GetComponent<Tower> ().damage = selectedTower.GetComponent<Tower> ().damage + 20f;
 			selectedTower.GetComponent<Tower> ().range = selectedTower.GetComponent<Tower> ().range + 2f;
-			selectedTower.GetComponent<Tower> ().fireCooldown = selectedTower.GetComponent<Tower> ().fireCooldown - .1f;
+			//selectedTower.GetComponent<Tower> ().fireCooldown = selectedTower.GetComponent<Tower> ().fireCooldown - .1f;
 
 			//basic tower doesnt have splash damage
 			if (selectedTower.GetComponent<Tower> ().gameObject.name != "Basic Tower") {
-				selectedTower.GetComponent<Tower> ().radius = selectedTower.GetComponent<Tower> ().radius + 4f;
+				selectedTower.GetComponent<Tower> ().radius = selectedTower.GetComponent<Tower> ().radius + 1f;
 			}
 		}
 	}
@@ -105,12 +109,12 @@ public class BuildingManager : MonoBehaviour {
 	void OnApplicationQuit()
 	{
 		basicTower.GetComponent<Tower> ().range = 15;
-		basicTower.GetComponent<Tower> ().damage = 1;
+		basicTower.GetComponent<Tower> ().damage = 35;
 		basicTower.GetComponent<Tower> ().radius = 0;
 		basicTower.GetComponent<Tower> ().fireCooldown = .75f;
 
 		rocketTower.GetComponent<Tower> ().range = 10;
-		rocketTower.GetComponent<Tower> ().damage = 2;
+		rocketTower.GetComponent<Tower> ().damage = 70;
 		rocketTower.GetComponent<Tower> ().radius = 3;
 		rocketTower.GetComponent<Tower> ().fireCooldown = 1.25f;
 	}
