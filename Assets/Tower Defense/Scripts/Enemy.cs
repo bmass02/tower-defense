@@ -5,6 +5,8 @@ public class Enemy : MonoBehaviour {
 
 	GameObject pathGO;
 
+	public GameObject explosionPrefab;
+
 	Transform targetPathNode;
 	int pathNodeIndex = 0;
 
@@ -81,6 +83,8 @@ public class Enemy : MonoBehaviour {
 
 	public void Die() {
 		source.PlayOneShot (deathSound, 1);
+
+		Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
 
 		//Instantiate returns an Object not GameObject, needs a cast for AddForce
 		GameObject g = Instantiate (enemyDead, this.transform.position, this.transform.rotation) as GameObject;

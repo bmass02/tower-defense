@@ -8,10 +8,13 @@ public class Bullet : MonoBehaviour {
 	public float damage = 1f;
 	public float radius = 0;
 
-	public float volRangeLow = .1f;
-	public float volRangeHigh = .3f;
+	float volRangeLow = .1f;
+	float volRangeHigh = .3f;
+
+	public GameObject explosionPrefab;
 
 	public AudioClip bulletHitSound;
+	public AudioClip rocketHitSound;
 	private AudioSource source;
 
 	// Use this for initialization
@@ -51,10 +54,17 @@ public class Bullet : MonoBehaviour {
 		// TODO:  What if it's an exploding bullet with an area of effect?
 
 		float vol = Random.Range (volRangeLow, volRangeHigh);
-		source.PlayOneShot (bulletHitSound, vol);
+
 
 		if(radius == 0) {
 			target.GetComponent<Enemy>().TakeDamage(damage);
+
+			source.PlayOneShot (bulletHitSound, vol);
+
+			GetComponent<Bullet> ().enabled = false;
+			GetComponentInChildren<MeshRenderer> ().enabled = false;
+
+			Destroy(gameObject, bulletHitSound.length);
 		}
 		else {
 			Collider[] cols = Physics.OverlapSphere(transform.position, radius); // returns list of colliders we've hit
@@ -65,12 +75,17 @@ public class Bullet : MonoBehaviour {
 					e.GetComponent<Enemy>().TakeDamage(damage);
 				}
 			}
+
+			Instantiate (explosionPrefab, this.transform.position, this.transform.rotation); // create explosion
+
+			source.PlayOneShot (rocketHitSound, vol);
+
+			GetComponent<Bullet> ().enabled = false;
+			GetComponentInChildren<MeshRenderer> ().enabled = false;
+
+			Destroy(gameObject, rocketHitSound.length);
 		}
 
-		GetComponent<Bullet> ().enabled = false;
-		GetComponentInChildren<MeshRenderer> ().enabled = false;
 
-		// Maybe spawn a cool "explosion" object here?
-		Destroy(gameObject, bulletHitSound.length);
 	}
 }
