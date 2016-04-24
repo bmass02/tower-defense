@@ -15,15 +15,16 @@ public class Enemy : MonoBehaviour {
 	public int moneyValue = 1;
 	public int lifeValue = 1;
 
-	public AudioClip deathSound;
-	private AudioSource source;
+	//public AudioClip reachedGoalSound;
+	//public AudioClip deathSound; | instead the death sound is attached to the deadenemy prefab and played on awake
+	//private AudioSource source;
 
 	public GameObject enemyDead;
 
 	// Use this for initialization
 	void Start () {
 		pathGO = GameObject.Find("Path");
-		source = GetComponent<AudioSource> ();
+		//source = GetComponent<AudioSource> ();
 	}
 
 	void GetNextPathNode() {
@@ -67,6 +68,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void ReachedGoal() {
+
 		GameObject.FindObjectOfType<ScoreManager>().LoseLife(lifeValue);
 		Destroy(gameObject);
 		Camera.main.GetComponent<RandomShake> ().PlayShake ();
@@ -81,7 +83,6 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void Die() {
-		source.PlayOneShot (deathSound, 1);
 
 		Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
 
