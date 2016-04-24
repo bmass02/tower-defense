@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tower Defense\Scripts\Bullet.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tower Defense\Scripts\BuildingManager.cs">
     <Files>
-      <File FileName="Assets\Tower Defense\Scripts\Enemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Tower Defense\Scripts\Enemy.cs" Line="19" Column="29" />
       <File FileName="Assets\Tower Defense\Scripts\Tower.cs" Line="1" Column="1" />
-      <File FileName="Assets\Tower Defense\Scripts\BuildingManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Tower Defense\Scripts\ScoreManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Tower Defense\Scripts\BuildingManager.cs" Line="119" Column="1" />
+      <File FileName="Assets\Tower Defense\Scripts\ScoreManager.cs" Line="38" Column="61" />
       <File FileName="Assets\Tower Defense\Scripts\TowerSpot.cs" Line="1" Column="1" />
-      <File FileName="Assets\Tower Defense\Scripts\Bullet.cs" Line="79" Column="104" />
+      <File FileName="Assets\Tower Defense\Scripts\PlayerCrystalRotation.cs" Line="7" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

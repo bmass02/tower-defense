@@ -10,11 +10,10 @@ public class Enemy : MonoBehaviour {
 	Transform targetPathNode;
 	int pathNodeIndex = 0;
 
-	float speed = 5f;
-
+	public float speed = 5f;
 	public float health = 1f;
-
 	public int moneyValue = 1;
+	public int lifeValue = 1;
 
 	public AudioClip deathSound;
 	private AudioSource source;
@@ -34,7 +33,6 @@ public class Enemy : MonoBehaviour {
 		}
 		else {
 			targetPathNode = null;
-			ReachedGoal();
 		}
 	}
 	
@@ -69,8 +67,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void ReachedGoal() {
-		GameObject.FindObjectOfType<ScoreManager>().LoseLife();
+		GameObject.FindObjectOfType<ScoreManager>().LoseLife(lifeValue);
 		Destroy(gameObject);
+		Camera.main.GetComponent<RandomShake> ().PlayShake ();
 	}
 
 	public void TakeDamage(float damage) {

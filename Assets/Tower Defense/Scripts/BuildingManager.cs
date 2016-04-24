@@ -108,7 +108,7 @@ public class BuildingManager : MonoBehaviour {
 	//janky way to make sure towers are reset to base stats when the application quits
 	void OnApplicationQuit()
 	{
-		basicTower.GetComponent<Tower> ().range = 15;
+		basicTower.GetComponent<Tower> ().range = 13;
 		basicTower.GetComponent<Tower> ().damage = 35;
 		basicTower.GetComponent<Tower> ().radius = 0;
 		basicTower.GetComponent<Tower> ().fireCooldown = .75f;

@@ -51,6 +51,8 @@
      <Compile Include="Assets\Tower Defense\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\LevelCreator.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\PathNode.cs" />
+     <Compile Include="Assets\Tower Defense\Scripts\PlayerCrystalRotation.cs" />
+     <Compile Include="Assets\Tower Defense\Scripts\RandomShake.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\RemoveDeadEnemy.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\Tower.cs" />

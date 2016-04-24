@@ -12,7 +12,16 @@ public class ScoreManager : MonoBehaviour {
 	public Text livesText;
 	public Text moneyUpdateText;
 
-	public void LoseLife(int l = 1) {
+	GameObject playerCrystal;
+
+	public GameObject hugeExplosionPrefab;
+
+	void Start()
+	{
+		playerCrystal = GameObject.FindGameObjectWithTag ("Player");
+	}
+
+	public void LoseLife(int l) {
 		lives -= l;
 		if(lives <= 0) {
 			GameOver();
@@ -21,8 +30,16 @@ public class ScoreManager : MonoBehaviour {
 
 	public void GameOver() {
 		Debug.Log("Game Over");
+
+		Instantiate (hugeExplosionPrefab, playerCrystal.transform.position, playerCrystal.transform.rotation);
+
+		Destroy (playerCrystal);
+
+		GameObject.Find ("EnemySpawner").GetComponent<EnemySpawner> ().enabled = false;
+
+
 		// TODO: send player to game over screen
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	void Update() {
