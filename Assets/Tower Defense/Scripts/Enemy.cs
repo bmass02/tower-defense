@@ -5,25 +5,18 @@ public class Enemy : MonoBehaviour {
 
 	GameObject pathGO;
 
-	public GameObject explosionPrefab;
-
 	Transform targetPathNode;
 	int pathNodeIndex = 0;
 
-	public float speed = 5f;
-	public float health = 1f;
-	public int moneyValue = 1;
-	public int lifeValue = 1;
+    public EnemyParams myParams;
 
 	//public AudioClip reachedGoalSound;
 	//public AudioClip deathSound; | instead the death sound is attached to the deadenemy prefab and played on awake
 	//private AudioSource source;
 
-	public GameObject enemyDead;
-
 	// Use this for initialization
 	void Start () {
-		pathGO = GameObject.Find("Path");
+        pathGO = GameObject.Find("Path");
 		//source = GetComponent<AudioSource> ();
 	}
 
@@ -50,7 +43,7 @@ public class Enemy : MonoBehaviour {
 
 		Vector3 dir = targetPathNode.position - this.transform.localPosition;
 
-		float distThisFrame = speed * Time.deltaTime;
+		float distThisFrame = myParams.speed * Time.deltaTime;
 
 		if(dir.magnitude <= distThisFrame) {
 			// We reached the node
@@ -69,14 +62,16 @@ public class Enemy : MonoBehaviour {
 
 	void ReachedGoal() {
 
-		GameObject.FindObjectOfType<ScoreManager>().LoseLife(lifeValue);
+		GameObject.FindObjectOfType<ScoreManager>().LoseLife(myParams.lifeValue);
 		Destroy(gameObject);
 		Camera.main.GetComponent<RandomShake> ().PlayShake ();
 	}
 
 	public void TakeDamage(float damage) {
-		health -= damage;
-		if(health <= 0) {
+        Debug.Log("damage: " + damage.ToString());
+        Debug.Log("Health: " + myParams.health.ToString());
+		myParams.health -= damage;
+		if(myParams.health <= 0) {
 			
 			Die();
 		}
@@ -84,13 +79,25 @@ public class Enemy : MonoBehaviour {
 
 	public void Die() {
 
-		Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
+		Instantiate (myParams.explosion, this.transform.position, this.transform.rotation);
 
-		//Instantiate returns an Object not GameObject, needs a cast for AddForce
-		GameObject g = Instantiate (enemyDead, this.transform.position, this.transform.rotation) as GameObject;
-		g.GetComponent<Rigidbody> ().AddForce (transform.forward * 250);
+		
+        if (myParams.nextParams == null)
+        {
+            GameObject dead = Instantiate(myParams.deadEnemy, this.transform.position, this.transform.rotation) as GameObject;
+            dead.GetComponent<Rigidbody>().AddForce(transform.forward * 250);
+        } else
+        {
+            //Instantiate returns an Object not GameObject, needs a cast for AddForce
+            GameObject g = Instantiate(myParams.emptyEnemy, this.transform.position, this.transform.rotation) as GameObject;
+            Enemy gEnemy = g.AddComponent<Enemy>();
+            gEnemy.myParams = myParams.nextParams;
+            gEnemy.pathGO = pathGO;
+            gEnemy.targetPathNode = targetPathNode;
+            gEnemy.pathNodeIndex = pathNodeIndex;
+        }
 
-		GameObject.FindObjectOfType<ScoreManager>().money += moneyValue;
+		GameObject.FindObjectOfType<ScoreManager>().money += myParams.moneyValue;
 		Destroy(gameObject);
 	}
 }
