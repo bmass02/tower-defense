@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public int lives = 20;
 	public int money = 100;
+	private bool dead = false;
 
 	public Text moneyText;
 	public Text livesText;
@@ -30,10 +31,12 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public void LoseLife(int l) {
-		lives -= l;
-		source.PlayOneShot (damagePlayerSound);
-		if(lives <= 0) {
-			GameOver();
+		if (!dead) {
+			lives -= l;
+			source.PlayOneShot (damagePlayerSound);
+			if (lives <= 0) {
+				GameOver ();
+			}
 		}
 	}
 
@@ -49,10 +52,9 @@ public class ScoreManager : MonoBehaviour {
 		gameOverUI.SetActive (true);
 		gameUI.SetActive (false);
 
+		dead = true;
 
-
-		// TODO: send player to game over screen
-		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		
 	}
 
 	void Update() {

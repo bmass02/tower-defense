@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class TowerSpot : MonoBehaviour {
-
+	
 	private AudioSource source;
 
 	void Start()
@@ -27,8 +27,10 @@ public class TowerSpot : MonoBehaviour {
 			sm.StartCoroutine(sm.ShowMessage(sm.moneyUpdateText, "- $" + bm.selectedTower.GetComponent<Tower>().cost, 2f));
 		}
 			
-		source.PlayOneShot (bm.buildTowerSound, 1);
+		source.PlayOneShot (bm.buildTowerSound, .25f);
+
+		GetComponent<MeshRenderer> ().enabled = false; // Hide tower while sound plays before we destroy it
 		Instantiate(bm.selectedTower, transform.parent.position, transform.parent.rotation); // create tower
-		Destroy(transform.parent.gameObject); // delete platform
+		Destroy(transform.parent.gameObject, bm.buildTowerSound.length); // delete platform
 	}
 }

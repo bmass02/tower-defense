@@ -21,7 +21,7 @@ public class BuildingManager : MonoBehaviour {
 
 	private AudioSource source;
 
-	public ScoreManager sm;
+	ScoreManager sm;
 
 	// Use this for initialization
 	void Start () {
