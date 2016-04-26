@@ -8,6 +8,7 @@ public class EnemyParams {
     public int moneyValue = 5;
     public int lifeValue = 1;
     public bool actuallyDie = true;
+    public Color objColor;
     public EnemyParams nextParams = null;
     public GameObject emptyEnemy;
     public GameObject deadEnemy;
@@ -21,6 +22,7 @@ public class EnemyParams {
         clone.moneyValue = moneyValue;
         clone.lifeValue = lifeValue;
         clone.actuallyDie = actuallyDie;
+        clone.objColor = objColor;
         if(nextParams != null)
         {
             clone.nextParams = nextParams.Clone();

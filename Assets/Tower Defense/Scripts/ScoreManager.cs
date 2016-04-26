@@ -53,9 +53,13 @@ public class ScoreManager : MonoBehaviour {
 		gameUI.SetActive (false);
 
 		dead = true;
+        BuildingManager myManager = gameObject.GetComponent<BuildingManager>();
+        myManager.OnApplicationQuit();
+        Time.timeScale = 1.0f;
+        fastForward = false;
 
-		
-	}
+
+    }
 
 	void Update() {
 		moneyText.text = "Money: $" + money.ToString();

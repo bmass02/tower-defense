@@ -46,6 +46,10 @@ public class EnemySpawner : MonoBehaviour {
                     // Spawn it!
                     wc.spawned++;
 					GameObject newEnemy = Instantiate(wc.eParams.emptyEnemy, this.transform.position, this.transform.rotation) as GameObject;
+                    MeshRenderer myRenderer = newEnemy.GetComponentInChildren<MeshRenderer>();
+                    Material newMaterial = new Material(Shader.Find("Standard"));
+                    newMaterial.color = wc.eParams.objColor;
+                    myRenderer.material = newMaterial;
                     Enemy eScript = newEnemy.AddComponent<Enemy>();
                     eScript.myParams = wc.eParams.Clone();
 

@@ -68,8 +68,6 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void TakeDamage(float damage) {
-        Debug.Log("damage: " + damage.ToString());
-        Debug.Log("Health: " + myParams.health.ToString());
 		myParams.health -= damage;
 		if(myParams.health <= 0) {
 			
@@ -78,25 +76,25 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void Die() {
-
-		Instantiate (myParams.explosion, this.transform.position, this.transform.rotation);
         GameObject.FindObjectOfType<ScoreManager>().money += myParams.moneyValue;
-
 
         if (myParams.nextParams == null)
         {
+            //Enemy fully defeated.
+            Instantiate(myParams.explosion, this.transform.position, this.transform.rotation);
             GameObject dead = Instantiate(myParams.deadEnemy, this.transform.position, this.transform.rotation) as GameObject;
             dead.GetComponent<Rigidbody>().AddForce(transform.forward * 250);
             Destroy(gameObject);
         } else
         {
-            //Instantiate returns an Object not GameObject, needs a cast for AddForce
-            //GameObject g = Instantiate(myParams.emptyEnemy, this.transform.position, this.transform.rotation) as GameObject;
-            //Enemy gEnemy = g.AddComponent<Enemy>();
+            //Change to next enemy
             myParams = myParams.nextParams;
-            //gEnemy.pathGO = pathGO;
-            //gEnemy.targetPathNode = targetPathNode;
-            //gEnemy.pathNodeIndex = pathNodeIndex;
+
+            //Set the new Color
+            MeshRenderer myRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+            Material newMaterial = new Material(Shader.Find("Standard"));
+            newMaterial.color = myParams.objColor;
+            myRenderer.material = newMaterial;
         }
         
 	}
