@@ -21,22 +21,28 @@ public class BuildingManager : MonoBehaviour {
 
 	private AudioSource source;
 
+	public ScoreManager sm;
+
 	// Use this for initialization
 	void Start () {
 		source = GetComponent<AudioSource> ();
 		basicTowerButton = GameObject.Find ("BasicTowerButton");
 		rocketTowerButton = GameObject.Find ("RocketTowerButton");
+		sm = GetComponent<ScoreManager>();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Change color of last selected button & play SFX
-		if (selectedTower.gameObject.name == "Basic Tower") {
-			basicTowerButton.GetComponent<Image> ().color = Color.green;
-			rocketTowerButton.GetComponent<Image> ().color = Color.white;
-		} else if (selectedTower.gameObject.name == "Rocket Tower") {
-			rocketTowerButton.GetComponent<Image> ().color = Color.green;
-			basicTowerButton.GetComponent<Image> ().color = Color.white;
+
+		if (basicTowerButton != null && rocketTowerButton != null) {
+			if (selectedTower.gameObject.name == "Basic Tower") {
+				basicTowerButton.GetComponent<Image> ().color = Color.green;
+				rocketTowerButton.GetComponent<Image> ().color = Color.white;
+			} else if (selectedTower.gameObject.name == "Rocket Tower") {
+				rocketTowerButton.GetComponent<Image> ().color = Color.green;
+				basicTowerButton.GetComponent<Image> ().color = Color.white;
+			}
 		}
 	}
 
@@ -96,13 +102,15 @@ public class BuildingManager : MonoBehaviour {
 	public GUIStyle statsGUI;
 	void OnGUI()
 	{
-		GUI.Box (new Rect (Screen.width - 410, Screen.height - 240, 190, 150), selectedTower.GetComponent<Tower> ().gameObject.name + " Stats", statsGUI);
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 210, 180, 280), "Cost: $" + selectedTower.GetComponent<Tower> ().cost, statsGUI);
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 175, 180, 280), "Damage: " + selectedTower.GetComponent<Tower> ().damage, statsGUI);
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 140, 180, 280), "Range: " + selectedTower.GetComponent<Tower> ().range + " units", statsGUI);
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 105, 180, 280), "Blast Radius: " + selectedTower.GetComponent<Tower> ().radius + " units", statsGUI);
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 70, 180, 280), "Rate of Fire: " + selectedTower.GetComponent<Tower> ().fireCooldown + " seconds", statsGUI); // Cool down time
-		GUI.Label (new Rect (Screen.width - 390, Screen.height - 35, 180, 280), "Upgrade Cost: $" + selectedTower.GetComponent<Tower> ().upgradeCost, statsGUI);
+		if (sm.lives != 0) {
+			GUI.Box (new Rect (Screen.width - 410, Screen.height - 240, 190, 150), selectedTower.GetComponent<Tower> ().gameObject.name + " Stats", statsGUI);
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 210, 180, 280), "Cost: $" + selectedTower.GetComponent<Tower> ().cost, statsGUI);
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 175, 180, 280), "Damage: " + selectedTower.GetComponent<Tower> ().damage, statsGUI);
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 140, 180, 280), "Range: " + selectedTower.GetComponent<Tower> ().range + " units", statsGUI);
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 105, 180, 280), "Blast Radius: " + selectedTower.GetComponent<Tower> ().radius + " units", statsGUI);
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 70, 180, 280), "Rate of Fire: " + selectedTower.GetComponent<Tower> ().fireCooldown + " seconds", statsGUI); // Cool down time
+			GUI.Label (new Rect (Screen.width - 390, Screen.height - 35, 180, 280), "Upgrade Cost: $" + selectedTower.GetComponent<Tower> ().upgradeCost, statsGUI);
+		}
 	}
 
 	//janky way to make sure towers are reset to base stats when the application quits

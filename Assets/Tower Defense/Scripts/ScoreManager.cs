@@ -13,17 +13,25 @@ public class ScoreManager : MonoBehaviour {
 	public Text moneyUpdateText;
     private bool fastForward = false;
 
+	public Image fadePlane;
+	public GameObject gameUI;
+	public GameObject gameOverUI;
+
 	GameObject playerCrystal;
+	public AudioClip damagePlayerSound;
+	private AudioSource source;
 
 	public GameObject hugeExplosionPrefab;
 
 	void Start()
 	{
 		playerCrystal = GameObject.FindGameObjectWithTag ("Player");
+		source = GetComponent<AudioSource> ();
 	}
 
 	public void LoseLife(int l) {
 		lives -= l;
+		source.PlayOneShot (damagePlayerSound);
 		if(lives <= 0) {
 			GameOver();
 		}
@@ -33,10 +41,14 @@ public class ScoreManager : MonoBehaviour {
 		Debug.Log("Game Over");
 
 		Instantiate (hugeExplosionPrefab, playerCrystal.transform.position, playerCrystal.transform.rotation);
-
 		Destroy (playerCrystal);
 
 		GameObject.Find ("EnemySpawner").GetComponent<EnemySpawner> ().enabled = false;
+
+		StartCoroutine (FadeToGameOverUI(Color.clear, Color.black, 1));
+		gameOverUI.SetActive (true);
+		gameUI.SetActive (false);
+
 
 
 		// TODO: send player to game over screen
@@ -63,6 +75,18 @@ public class ScoreManager : MonoBehaviour {
 		}
 
 		updateMessageText.enabled = false;
+	}
+
+	IEnumerator FadeToGameOverUI(Color from, Color to, float time)
+	{
+		float speed = 1 / time;
+		float percent = 0;
+
+		while (percent < 1) {
+			percent += Time.deltaTime * speed;
+			fadePlane.color = Color.Lerp (from, to, percent);
+			yield return null;
+		}
 	}
 
     public void FastForward()

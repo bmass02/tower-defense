@@ -4,18 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	public void SwitchScene(string scene)
+	{
+		SceneManager.LoadScene (scene);
+
 	}
 
-	public void SwitchScene()
+	public void Close()
 	{
-		SceneManager.LoadScene ("Level1");
+		Application.Quit ();
+		UnityEditor.EditorApplication.isPlaying = false;
 	}
 }

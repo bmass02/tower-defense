@@ -47,7 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\Tower Defense\Scripts\BuildingManager.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Tower Defense\Scripts\DontDestroy.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Tower Defense\Scripts\EnemyParams.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\LevelCreator.cs" />
      <Compile Include="Assets\Tower Defense\Scripts\MainMenu.cs" />
