@@ -11,6 +11,7 @@ public class ScoreManager : MonoBehaviour {
 	public Text moneyText;
 	public Text livesText;
 	public Text moneyUpdateText;
+    private bool fastForward = false;
 
 	GameObject playerCrystal;
 
@@ -63,4 +64,17 @@ public class ScoreManager : MonoBehaviour {
 
 		updateMessageText.enabled = false;
 	}
+
+    public void FastForward()
+    {
+        if (fastForward)
+        {
+            Time.timeScale = 1.0f;
+            fastForward = false;
+        } else
+        {
+            Time.timeScale = 4.0f;
+            fastForward = true;
+        }
+    }
 }

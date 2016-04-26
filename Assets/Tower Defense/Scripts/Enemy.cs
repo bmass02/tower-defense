@@ -80,24 +80,24 @@ public class Enemy : MonoBehaviour {
 	public void Die() {
 
 		Instantiate (myParams.explosion, this.transform.position, this.transform.rotation);
+        GameObject.FindObjectOfType<ScoreManager>().money += myParams.moneyValue;
 
-		
+
         if (myParams.nextParams == null)
         {
             GameObject dead = Instantiate(myParams.deadEnemy, this.transform.position, this.transform.rotation) as GameObject;
             dead.GetComponent<Rigidbody>().AddForce(transform.forward * 250);
+            Destroy(gameObject);
         } else
         {
             //Instantiate returns an Object not GameObject, needs a cast for AddForce
-            GameObject g = Instantiate(myParams.emptyEnemy, this.transform.position, this.transform.rotation) as GameObject;
-            Enemy gEnemy = g.AddComponent<Enemy>();
-            gEnemy.myParams = myParams.nextParams;
-            gEnemy.pathGO = pathGO;
-            gEnemy.targetPathNode = targetPathNode;
-            gEnemy.pathNodeIndex = pathNodeIndex;
+            //GameObject g = Instantiate(myParams.emptyEnemy, this.transform.position, this.transform.rotation) as GameObject;
+            //Enemy gEnemy = g.AddComponent<Enemy>();
+            myParams = myParams.nextParams;
+            //gEnemy.pathGO = pathGO;
+            //gEnemy.targetPathNode = targetPathNode;
+            //gEnemy.pathNodeIndex = pathNodeIndex;
         }
-
-		GameObject.FindObjectOfType<ScoreManager>().money += myParams.moneyValue;
-		Destroy(gameObject);
+        
 	}
 }
