@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour {
 	Transform targetPathNode;
 	int pathNodeIndex = 0;
 
+	ScoreManager sm;
+
     public EnemyParams myParams;
 
 	//public AudioClip reachedGoalSound;
@@ -17,6 +19,8 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         pathGO = GameObject.Find("Path");
+
+		sm = GameObject.Find ("GameManager").GetComponent<ScoreManager>();
 		//source = GetComponent<AudioSource> ();
 	}
 
@@ -62,9 +66,11 @@ public class Enemy : MonoBehaviour {
 
 	void ReachedGoal() {
 
-		GameObject.FindObjectOfType<ScoreManager>().LoseLife(myParams.lifeValue);
-		Destroy(gameObject);
-		Camera.main.GetComponent<RandomShake> ().PlayShake ();
+		if (sm.dead == false) {
+			GameObject.FindObjectOfType<ScoreManager> ().LoseLife (myParams.lifeValue);
+			Destroy (gameObject);
+			Camera.main.GetComponent<RandomShake> ().PlayShake ();
+		}
 	}
 
 	public void TakeDamage(float damage) {

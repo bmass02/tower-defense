@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public int lives = 20;
 	public int money = 100;
-	private bool dead = false;
+	public bool dead = false;
 
 	public Text moneyText;
 	public Text livesText;
@@ -31,7 +31,7 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public void LoseLife(int l) {
-		if (!dead) {
+		if (dead == false) {
 			lives -= l;
 			source.PlayOneShot (damagePlayerSound);
 			if (lives <= 0) {
@@ -44,12 +44,14 @@ public class ScoreManager : MonoBehaviour {
 		Debug.Log("Game Over");
 
 		Instantiate (hugeExplosionPrefab, playerCrystal.transform.position, playerCrystal.transform.rotation);
-		Destroy (playerCrystal);
+		//Destroy (playerCrystal);
+		playerCrystal.GetComponent<MeshRenderer>().enabled = false;
 
 		GameObject.Find ("EnemySpawner").GetComponent<EnemySpawner> ().enabled = false;
 
 		StartCoroutine (FadeToGameOverUI(Color.clear, Color.black, 1));
 		gameOverUI.SetActive (true);
+
 		gameUI.SetActive (false);
 
 		dead = true;
